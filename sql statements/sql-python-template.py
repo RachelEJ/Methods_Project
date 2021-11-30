@@ -13,13 +13,13 @@ try:
                             database="methods_store")  # same as the name of the 
                                                        # methods_store database in pgAdmin
     
-    # use a dictionary to access results by column name instead of 
-    # column number
+    # use a dictionary to access results by column name instead of column number
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     
 
 
-    # insert contacts 
+    # insert multiple rows at a time
+    # can be reduced to a single list for adding one row 
     insert_item = (("4001", "testInsert1", "25", "50.00"),
                      ("4002", "testInsert2", "30", "60.00"),
                      ("4003", "testInsert3", "35", "70.00"))
