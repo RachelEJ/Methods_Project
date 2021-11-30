@@ -38,4 +38,7 @@ https://www.makeuseof.com/tag/install-pip-for-python/
 `pip list`
 
 ## Accessing and altering the database using Python
+### Add SQL commands into Python file
 Follow the template in the "sql statements" folder titled sql-python-template.py
+### Run the Python file
+Open a Command Prompt window and run `python filename`
