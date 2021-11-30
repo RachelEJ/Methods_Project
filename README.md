@@ -36,3 +36,6 @@ https://www.makeuseof.com/tag/install-pip-for-python/
 `pip install psycopg2-binary`
 7. Verify that you have psycopg2 installed
 `pip list`
+
+## Accessing and altering the database using Python
+Follow the template in the "sql statements" folder titled sql-python-template.py
