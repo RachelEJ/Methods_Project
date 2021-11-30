@@ -1,4 +1,4 @@
-# Example of creating a table and inserting values
+# Example of creating queries and inserting values
 
 import psycopg2  
 import psycopg2.extras  # needed for dictionary cursor
