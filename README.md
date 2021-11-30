@@ -22,5 +22,17 @@ https://www.enterprisedb.com/software-downloads-postgres
 11. Press F5 on keyboard or Execute/Refresh at the top toolbar of pgAdmin 4
 
 ## Setting up Python compatibility with the database
-## Install psycopg2
-
+### Install psycopg2
+1. Open a Command Prompt window
+2. Verify that you have Python installed
+`python --version`
+3. If not, install Python (3.8.8 used in initial creation of this guide)
+https://www.python.org/downloads/
+4. Verify that you have PIP installed 
+`pip --version`
+5. If not, install Pip
+https://www.makeuseof.com/tag/install-pip-for-python/
+6. Install psycopg2 Python module
+` pip install psycopg2-binary`
+7. Verify that you have psycopg2 installed
+`pip list`
