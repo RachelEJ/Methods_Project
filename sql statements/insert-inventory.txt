@@ -1,0 +1,9 @@
+INSERT INTO inventory VALUES (1001, 'ballistaBolt', 100, 50.00);
+INSERT INTO inventory VALUES (1002, 'oilPot', 60, 75.00);
+INSERT INTO inventory VALUES (1003, 'stone', 400, 30.00);
+INSERT INTO inventory VALUES (2001, 'ballista', 35, 400.00);
+INSERT INTO inventory VALUES (2002, 'catapult', 40, 450.00);
+INSERT INTO inventory VALUES (2003, 'trebuchet', 25, 550.00);
+INSERT INTO inventory VALUES (3001, 'batteringRam', 10, 300.00);
+INSERT INTO inventory VALUES (3002, 'ladder', 50, 100.00);
+INSERT INTO inventory VALUES (3003, 'siegeTower', 30, 500.00);
