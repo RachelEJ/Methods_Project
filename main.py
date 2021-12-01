@@ -65,7 +65,7 @@ def createAccount(database):
         else:
             cardNumLenCheck = 1
     if (database.addUser(inputUsername, inputFName, inputLName, inputPassword, inputEmail, inputAddress, inputCreditCard)):
-        print("Successfully created user.")
+        print("Successfully created user.\n")
     else:
         print("Could not add user - username already taken.")
     # INSERT INTO users VALUES (inputUsername, inputfname, inputlname, inputpassword, inputemail, inputaddress, inputcreditcard)
@@ -80,23 +80,22 @@ def loginAccount(database):
     username = ""
     password = ""
     while(len(username) == 0):
-        username = input("Enter username:")
+        username = input("Enter username: ")
 
     while(len(password) == 0):
-        password = input("Enter password:")
+        password = input("Enter password: ")
     
     user = database.getUser(username, password)
     if (user == False):
-        print("Did not find a match.")
+        print("Did not find a match.\n")
         main(database)
     else:
-        print("Logged In Successfully")
+        print("Logged In Successfully\n")
         loggedInSession(user, database)
 
 
 def logoutAccount(user, database):
-    # logout stuff here
-    print("logout stuff here")
+    print("You have been logged out\n")
     main(database)
 
 
@@ -114,14 +113,15 @@ def addItemMenu(user, database):
     quantityItem = int(input("Enter the quantity of that item: "))
 
     if(user.cart.addItem(addItem, quantityItem)):
-        print ("Successfully added item.")
+        print ("Successfully added item.\n")
     
     else:
-        print("Could not add item.")
-    #print("it has been added")
+        print("Could not add item.\n")
 
 
 def inventoryMenu(user, database):
+    print("===========================")
+    print("Inventory Information")
     menuOptionInvMenu = 9
     while (menuOptionInvMenu != 0):
         print("===========================")
@@ -147,7 +147,8 @@ def viewCart(user, database):
         print("Cart is empty.")
     for item in user.cart.items:
         actualItem = database.getItemBySku(item[0])
-        print(actualItem.name, "SKU:" , item[0], "Quantity:", item[1], "Cost:", "€"+str(actualItem.price * int(item[1])))
+        print(actualItem.name, "SKU:" , item[0], "Quantity:", item[1], "Cost:", actualItem.price * int(item[1]))
+    print()
 
 def removeItemMenu(user, database):
     removeItem = input("Enter the SKU of the item you wish to remove ")
@@ -159,6 +160,8 @@ def removeItemMenu(user, database):
     print("it has been removed")
 
 def cartMenu(user, database):
+    print("===========================")
+    print("Cart Information")
     menuOptionCartMenu = 9
     while (menuOptionCartMenu != 0):
         print("===========================")
@@ -184,7 +187,7 @@ def cartMenu(user, database):
             print("call cart checkout method")
 
         else:
-            print("That is not a valid response. Please try again")
+            print("That is not a valid response. Please try again\n")
 
 
 def viewPurchaseHistory(user, database):
@@ -195,7 +198,7 @@ def viewPurchaseHistory(user, database):
 def editShippingMenu(user, database):
     newAddrLenCheck = 0
     while (newAddrLenCheck == 0):
-        newAddress = input("Enter your new address ")
+        newAddress = input("Enter your : ")
         if len(newAddress) > 30:
             print("Please limit address to 30 characters max")
         else:
@@ -207,7 +210,7 @@ def editShippingMenu(user, database):
 def editPaymentMenu(user, database):
     newCardNumLenCheck = 0
     while (newCardNumLenCheck == 0):
-        newCardNum = input("Enter your new credit card number ")
+        newCardNum = input("Enter your new credit card number: ")
         if (len(newCardNum) > 12):
             print("Please limit credit card number to 12 characters max")
         else:
@@ -220,20 +223,22 @@ def deleteAccountMenu(user, database):
     while ((really != "y") and (really != "n")):
         really = input("Are you sure you wish to delete your account? (y/n) ")
         if (really == "y"):
-            verifyUser = input("Enter your username ")
-            verifyPassword = input("Enter your password ")
+            verifyUser = input("Enter your username: ")
+            verifyPassword = input("Enter your password: ")
             # call deleteAccount() class method
             break
 
         elif (really == "n"):
-            print("Phew, you had us worried for a second there")
+            print("Phew, you had us worried for a second there\n")
             break
 
         else:
-            print("That is not a valid response. Please try again")
+            print("That is not a valid response. Please try again\n")
 
 
 def accountInfoMenu(user, database):
+    print("===========================")
+    print("Account Information")
     menuOptionAccInfo = 9
     while (menuOptionAccInfo != 0):
         print("===========================")
@@ -258,10 +263,12 @@ def accountInfoMenu(user, database):
             deleteAccountMenu(user, database)
 
         else:
-            print("That is not a valid response. Please try again")
+            print("That is not a valid response. Please try again\n")
 
 
 def userMenu(user, database):
+    print("===========================")
+    print("User Information")
     menuOptionUserMenu = 9
     while (menuOptionUserMenu != 0):
         print("===========================")
@@ -282,10 +289,12 @@ def userMenu(user, database):
             accountInfoMenu(user, database)
 
         else:
-            print("That is not a valid response. Please try again")
+            print("That is not a valid response. Please try again\n")
 
 
 def loggedInSession(user, database):
+    print("===========================")
+    print("Main Menu")
     menuOptionLoggedIn = 9
     while (menuOptionLoggedIn != 0):
         print("===========================")
@@ -314,12 +323,12 @@ def loggedInSession(user, database):
             logoutAccount(user, database)
 
         else:
-            print("That is not a valid response. Please try again")
+            print("That is not a valid response. Please try again\n")
 
 
 def main(database = None):
+    print("===========================")
     print("Welcome to Kastle Krashers!")
-    print()
     menuOptionMain = 911
     if (database == None):
         database = DatabaseInterface.DatabaseInterface("postgres", "flameMonkey", "127.0.0.1", "5432", "methods_store")
@@ -342,6 +351,6 @@ def main(database = None):
             loginAccount(database)
 
         else:
-            print("That is not a valid response. Please try again")
+            print("That is not a valid response. Please try again\n")
 
 main()
