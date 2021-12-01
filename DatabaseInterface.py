@@ -145,7 +145,7 @@ class DatabaseInterface():
 
     def addUser(self, userid, fname, lname, password, email, address, cardinfo):
         try:
-            insertString = "INSERT INTO user(userid, fname, lname, password, email, address, cardinfo) VALUES %s %s %s %s %s %s %s"
+            insertString = "INSERT INTO users(userid, fname, lname, password, email, address, cardinfo) VALUES (%s, %s, %s, %s, %s, %s, %s)"
             self.cursor.execute(insertString, (userid, fname, lname, password, email, address, cardinfo))
             self.conn.commit()
             
@@ -158,7 +158,7 @@ class DatabaseInterface():
 
     def addCartItem(self, userid, sku, quantity):
         try:
-            insertString = "INSERT INTO cart(userid, itemsku, quantity) VALUES %s %s %s"
+            insertString = "INSERT INTO cart(userid, itemsku, quantity) VALUES (%s, %s, %s)"
             self.cursor.execute(insertString, (userid, sku, quantity))
             self.conn.commit()
             
@@ -197,7 +197,7 @@ class DatabaseInterface():
 
     def addHistory(self, userid, historyid, items):
         try:
-            insertString = "INSERT INTO purchasehistory(purchaseid, userid, itemsku, quantity) VALUES %s %s %s %s"
+            insertString = "INSERT INTO purchasehistory(purchaseid, userid, itemsku, quantity) VALUES (%s, %s, %s, %s)"
             self.cursor.executemany(insertString, [[historyid, userid, item[0], item[1]] for item in items ])
             self.conn.commit()
             

@@ -90,18 +90,18 @@ def loginAccount(database):
         loggedInSession(user)
 
 
-def logoutAccount():
+def logoutAccount(user):
     # logout stuff here
     print("logout stuff here")
     main()
 
 
-def viewInventory():
+def viewInventory(user):
     # select * from inventory and print it out
     print("view inventory")
 
 
-def addItemMenu():
+def addItemMenu(user):
     addItem = input("Enter the SKU of the item you wish to add ")
     quantityItem = input("Enter the quantity of that item ")
     # call the ShoppingCart method for addItem
@@ -112,7 +112,7 @@ def addItemMenu():
     print("it has been added")
 
 
-def inventoryMenu():
+def inventoryMenu(user):
     menuOptionInvMenu = 9
     while (menuOptionInvMenu != 0):
         print("===========================")
@@ -127,16 +127,16 @@ def inventoryMenu():
             break
 
         elif (menuOptionInvMenu == "1"):
-            viewInventory()
+            viewInventory(user)
 
         elif (menuOptionInvMenu == "2"):
-            addItemMenu()
+            addItemMenu(user)
 
-def viewCart():
+def viewCart(user):
     # select * from cart WHERE userID = (current user)
     print("view cart")
 
-def removeItemMenu():
+def removeItemMenu(user):
     removeItem = input("Enter the SKU of the item you wish to remove ")
     # call the ShoppingCart method for removeItem
     # if (methodCall() == 1):
@@ -145,7 +145,7 @@ def removeItemMenu():
     #     print("Item was not removed from cart")
     print("it has been removed")
 
-def cartMenu():
+def cartMenu(user):
     menuOptionCartMenu = 9
     while (menuOptionCartMenu != 0):
         print("===========================")
@@ -161,10 +161,10 @@ def cartMenu():
             break
 
         elif (menuOptionCartMenu == "1"):
-            viewCart()
+            viewCart(user)
 
         elif (menuOptionCartMenu == "2"):
-            removeItemMenu()
+            removeItemMenu(user)
 
         elif (menuOptionCartMenu == "3"):
             # call cart checkout method
@@ -174,12 +174,12 @@ def cartMenu():
             print("That is not a valid response. Please try again")
 
 
-def viewPurchaseHistory():
+def viewPurchaseHistory(user):
     # select * from purchasehistory where userid == (current userID)
     print("view purchase history")
 
 
-def editShippingMenu():
+def editShippingMenu(user):
     newAddrLenCheck = 0
     while (newAddrLenCheck == 0):
         newAddress = input("Enter your new address ")
@@ -191,7 +191,7 @@ def editShippingMenu():
 
 
 
-def editPaymentMenu():
+def editPaymentMenu(user):
     newCardNumLenCheck = 0
     while (newCardNumLenCheck == 0):
         newCardNum = input("Enter your new credit card number ")
@@ -202,7 +202,7 @@ def editPaymentMenu():
     # UPDATE users SET cardinfo = (newCardNum) WHERE userid = (current userID)
 
 
-def deleteAccountMenu():
+def deleteAccountMenu(user):
     really = "x"
     while ((really != "y") and (really != "n")):
         really = input("Are you sure you wish to delete your account? (y/n) ")
@@ -220,7 +220,7 @@ def deleteAccountMenu():
             print("That is not a valid response. Please try again")
 
 
-def accountInfoMenu():
+def accountInfoMenu(user):
     menuOptionAccInfo = 9
     while (menuOptionAccInfo != 0):
         print("===========================")
@@ -248,7 +248,7 @@ def accountInfoMenu():
             print("That is not a valid response. Please try again")
 
 
-def userMenu():
+def userMenu(user):
     menuOptionUserMenu = 9
     while (menuOptionUserMenu != 0):
         print("===========================")
@@ -263,10 +263,10 @@ def userMenu():
             break
 
         elif (menuOptionUserMenu == "1"):
-            viewPurchaseHistory()
+            viewPurchaseHistory(user)
 
         elif (menuOptionUserMenu == "2"):
-            accountInfoMenu()
+            accountInfoMenu(user)
 
         else:
             print("That is not a valid response. Please try again")
@@ -289,16 +289,16 @@ def loggedInSession(user):
             quit()
 
         elif (menuOptionLoggedIn == "1"):
-            inventoryMenu()
+            inventoryMenu(user)
 
         elif (menuOptionLoggedIn == "2"):
-            cartMenu()
+            cartMenu(user)
 
         elif (menuOptionLoggedIn == "3"):
-            userMenu()
+            userMenu(user)
 
         elif (menuOptionLoggedIn == "4"):
-            logoutAccount()
+            logoutAccount(user)
 
         else:
             print("That is not a valid response. Please try again")
@@ -307,7 +307,7 @@ def loggedInSession(user):
 def main():
     print("Welcome to Kastle Krashers!")
     print()
-    menuOptionMain = 9
+    menuOptionMain = 911
     database = DatabaseInterface.DatabaseInterface("postgres", "flameMonkey", "127.0.0.1", "5432", "methods_store")
     while (menuOptionMain != 0):
         print("===========================")
