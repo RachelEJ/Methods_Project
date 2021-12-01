@@ -1,4 +1,6 @@
-def createAccount():
+import DatabaseInterface
+
+def createAccount(database):
     inputUsername = ""
     inputPassword = ""
     inputFName = ""
@@ -62,17 +64,30 @@ def createAccount():
             print("Please limit credit card number to 12 characters max")
         else:
             cardNumLenCheck = 1
-
+    database.addUser(inputUsername, inputFName, inputLName, inputPassword, inputEmail, inputAddress, inputCreditCard)
     # INSERT INTO users VALUES (inputUsername, inputfname, inputlname, inputpassword, inputemail, inputaddress, inputcreditcard)
 # NOTE: database tuple has column names in this order:
 # userid, fname, lname, password, email, address, cardinfo
 
 
 
-def loginAccount():
+def loginAccount(database):
     # login stuff here
-    print("login stuff here")
-    loggedInSession()
+
+    username = ""
+    password = ""
+    while(len(username) == 0):
+        username = input("Enter username:")
+
+    while(len(password) == 0):
+        password = input("Enter password:")
+    
+    user = database.getUser(username, password)
+    if (user == False):
+        main()
+    else:
+        print("Logged In Successfully")
+        loggedInSession(user)
 
 
 def logoutAccount():
@@ -257,7 +272,7 @@ def userMenu():
             print("That is not a valid response. Please try again")
 
 
-def loggedInSession():
+def loggedInSession(user):
     menuOptionLoggedIn = 9
     while (menuOptionLoggedIn != 0):
         print("===========================")
@@ -293,6 +308,7 @@ def main():
     print("Welcome to Kastle Krashers!")
     print()
     menuOptionMain = 9
+    database = DatabaseInterface.DatabaseInterface("postgres", "flameMonkey", "127.0.0.1", "5432", "methods_store")
     while (menuOptionMain != 0):
         print("===========================")
         print("0. Exit Program")
@@ -306,10 +322,10 @@ def main():
             quit()
         
         elif (menuOptionMain == "1"):
-            createAccount()
+            createAccount(database)
         
         elif (menuOptionMain == "2"):
-            loginAccount()
+            loginAccount(database)
 
         else:
             print("That is not a valid response. Please try again")

@@ -30,6 +30,12 @@ class DatabaseInterface():
             if (item.sku == sku):
                 return item
         
+    def getUser(self, userid, password):
+        for user in self.users:
+            if (user.username == userid and user.password == password):
+                return user
+        return False
+                
     def loadItems(self):
         try:
             
@@ -134,6 +140,19 @@ class DatabaseInterface():
             if self.conn:
                 self.conn.rollback()
             print("Could not change user cardinfo")
+            print("PostgreSQL Error: %s" % err.args[0])
+            sys.exit(-1)
+
+    def addUser(self, userid, fname, lname, password, email, address, cardinfo):
+        try:
+            insertString = "INSERT INTO user(userid, fname, lname, password, email, address, cardinfo) VALUES %s %s %s %s %s %s %s"
+            self.cursor.execute(insertString, (userid, fname, lname, password, email, address, cardinfo))
+            self.conn.commit()
+            
+        except psycopg2.Error as err:
+            if self.conn:
+                self.conn.rollback()
+            print("Could not add user")
             print("PostgreSQL Error: %s" % err.args[0])
             sys.exit(-1)
 
