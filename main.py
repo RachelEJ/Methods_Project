@@ -147,7 +147,7 @@ def viewCart(user, database):
         print("Cart is empty.")
     for item in user.cart.items:
         actualItem = database.getItemBySku(item[0])
-        print(actualItem.name, "SKU:" , item[0], "Quantity:", item[1], "Cost:", actualItem.price * actualItem.quantity)
+        print(actualItem.name, "SKU:" , item[0], "Quantity:", item[1], "Cost:", "€"+str(actualItem.price * int(item[1])))
 
 def removeItemMenu(user, database):
     removeItem = input("Enter the SKU of the item you wish to remove ")
