@@ -106,7 +106,7 @@ def viewInventory(user, database):
         inStockText = 'In Stock: ' + str(item.quantity)
         if (item.quantity < 0):
             inStockText = "Out of Stock"
-        print( item.name, 'SKU:', item.sku, 'Price:', "€"+item.price, inStockText)
+        print( item.name, 'SKU:', item.sku, 'Price:', "€"+str(item.price), inStockText)
 
 
 def addItemMenu(user, database):
@@ -118,7 +118,7 @@ def addItemMenu(user, database):
     
     else:
         print("Could not add item.")
-    print("it has been added")
+    #print("it has been added")
 
 
 def inventoryMenu(user, database):
