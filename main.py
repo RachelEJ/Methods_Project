@@ -84,6 +84,7 @@ def loginAccount(database):
     
     user = database.getUser(username, password)
     if (user == False):
+        print("Did not find a match.")
         main()
     else:
         print("Logged In Successfully")

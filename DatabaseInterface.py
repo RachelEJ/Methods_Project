@@ -10,6 +10,7 @@ class DatabaseInterface():
 
         self.items = []
         self.users = []
+
         try:
             self.conn = psycopg2.connect(user = username, password = password, host = host, port = port, database=database)
 
@@ -21,17 +22,23 @@ class DatabaseInterface():
             print("PostgreSQL Error: %s" % err.args[0])
             sys.exit(-1)
 
+        self.loadItems()
+        self.loadUsers()
+
     def exit(self):
         if self.conn:
             self.conn.close()
     
     def getItemBySku(self, sku):
         for item in self.items:
+            
             if (item.sku == sku):
                 return item
         
     def getUser(self, userid, password):
         for user in self.users:
+            print(user.username)
+            print(user.password)
             if (user.username == userid and user.password == password):
                 return user
         return False
@@ -42,7 +49,7 @@ class DatabaseInterface():
             self.cursor.execute("SELECT * FROM inventory")
             row = self.cursor.fetchone()
             while row:
-                self.items.append(Item.Item(row['name'], row['sku'], row['price'], row['quantity'], self))
+                self.items.append(Item.Item(row['itemname'], row['sku'], row['price'], row['quantity'], self))
                 row = self.cursor.fetchone()
             
             
@@ -72,7 +79,10 @@ class DatabaseInterface():
 
         for user in self.users:
             try:
-                self.cursor.execute("SELECT * FROM cart WHERE userid = %s", (user.username))
+                grabString = "SELECT * FROM cart WHERE userid = '" + user.username +"'"
+                
+                
+                self.cursor.execute(grabString)
                 row = self.cursor.fetchone()
                 while row:
                     user.cart.addItem(row['itemsku'], row['quantity'])
@@ -87,7 +97,8 @@ class DatabaseInterface():
                 sys.exit(-1)
             
             try:
-                self.cursor.execute("SELECT * FROM purchasehistory WHERE userid = %s", (user.username))
+                grabString = "SELECT * FROM purchasehistory WHERE userid = '" + user.username+ "'"
+                self.cursor.execute(grabString)
                 row = self.cursor.fetchone()
                 while row:
                     if (row['purchaseid'] in user.purchaseHistory):

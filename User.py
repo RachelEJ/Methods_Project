@@ -11,7 +11,7 @@ class User:
         self.purchaseHistory = {}
         self.db = db
         #need to make someway to generate new ids
-        self.cart = ShoppingCart.ShoppingCart(0)
+        self.cart = ShoppingCart.ShoppingCart(username, db)
 
 
     def checkout(self):
