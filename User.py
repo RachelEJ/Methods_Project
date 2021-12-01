@@ -8,7 +8,7 @@ class User:
         self.lastName = lastName
         self.address = address
         self.cardNumber = cardNumber
-        self.purchaseHistory = []
+        self.purchaseHistory = {}
         #need to make someway to generate new ids
         self.cart = ShoppingCart.ShoppingCart(0)
 

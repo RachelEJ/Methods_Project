@@ -32,7 +32,7 @@ class DatabaseInterface():
             self.cursor.execute("SELECT * FROM inventory")
             row = self.cursor.fetchone()
             while row:
-                self.items.append(Item.Item(row['name'], row['sku'], row['price'], row['quantity'], row['description']))
+                self.items.append(Item.Item(row['name'], row['sku'], row['price'], row['quantity']))
                 row = self.cursor.fetchone()
             
             
