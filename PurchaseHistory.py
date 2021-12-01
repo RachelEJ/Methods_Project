@@ -1,7 +1,10 @@
 class PurchaseHistory:
-    def __init__(self, historyID, shoppingCart):
+    def __init__(self, historyID):
         self.historyID = historyID
-        self.items = shoppingCart.getItems()
+        self.items = []
+
+    def addItem(self, sku, quantity):
+        self.items.append((sku, quantity))
     
     def addCartToHistory(self, shoppingCart):
         self.items = shoppingCart.getItems()
