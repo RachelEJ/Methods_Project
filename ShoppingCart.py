@@ -12,7 +12,10 @@ class ShoppingCart:
         while (i < len(self.items)):
             if (self.items[i][0] == sku):
                 self.items.pop(i)
+                self.db.removeCartItem(self.user, sku)
             i += 1
+
+        
 
     def changeQuantity(self, sku, newQuantity):
         i = 0

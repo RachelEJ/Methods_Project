@@ -16,7 +16,8 @@ class User:
     # need to add functionality
     # how do we want to access the global inventory?
     def checkout(self, cardNumber):
-        self.purchaseHistory.append(PurchaseHistory(0, self.cart))
+        self.db.emptyCart(self.username)
+        self.purchaseHistory.append(PurchaseHistory(self.username, 0, self.db, self.cart))
         self.cart = ShoppingCart.ShoppingCart(00)
 
     def getHistory(self):

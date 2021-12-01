@@ -116,7 +116,7 @@ class DatabaseInterface():
         except psycopg2.Error as err:
             if self.conn:
                 self.conn.rollback()
-            print("Could not change user cardinfo")
+            print("Could not change user address")
             print("PostgreSQL Error: %s" % err.args[0])
             sys.exit(-1)
 
@@ -143,6 +143,32 @@ class DatabaseInterface():
             if self.conn:
                 self.conn.rollback()
             print("Could not add cart item")
+            print("PostgreSQL Error: %s" % err.args[0])
+            sys.exit(-1)
+
+    def removeCartItem(self, userid, sku):
+        try:
+            insertString = "DELETE FROM cart WHERE userid = %s AND sku = %s"
+            self.cursor.execute(insertString, (userid, sku))
+            self.conn.commit()
+            
+        except psycopg2.Error as err:
+            if self.conn:
+                self.conn.rollback()
+            print("Could not remove cart item")
+            print("PostgreSQL Error: %s" % err.args[0])
+            sys.exit(-1)
+
+    def emptyCart(self, userid):
+        try:
+            insertString = "DELETE FROM cart WHERE userid = %s"
+            self.cursor.execute(insertString, (userid))
+            self.conn.commit()
+            
+        except psycopg2.Error as err:
+            if self.conn:
+                self.conn.rollback()
+            print("Could not empty")
             print("PostgreSQL Error: %s" % err.args[0])
             sys.exit(-1)
 
