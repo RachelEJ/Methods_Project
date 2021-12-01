@@ -92,7 +92,7 @@ class DatabaseInterface():
                 self.cursor.execute(grabString)
                 row = self.cursor.fetchone()
                 while row:
-                    user.cart.addItem(row['itemsku'], row['quantity'])
+                    user.cart.items.append((row['itemsku'], row['quantity']))
                     row = self.cursor.fetchone()
                 
                 
@@ -110,7 +110,7 @@ class DatabaseInterface():
                 while row:
                     if (row['purchaseid'] in user.purchaseHistory):
                         user.purchaseHistory['purchaseid'] = PurchaseHistory.PurchaseHistory(user.username, row['purchaseid'], self)
-                    user.purchaseHistory['purchaseid'].addItem(row['itemsku'], row['quantity'])
+                    user.purchaseHistory['purchaseid'].items.append((row['itemsku'], row['quantity']))
                     row = self.cursor.fetchone()
                 
                 
