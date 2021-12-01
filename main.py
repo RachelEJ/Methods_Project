@@ -190,7 +190,7 @@ def editPaymentMenu():
 def deleteAccountMenu():
     really = "x"
     while ((really != "y") and (really != "n")):
-        really = input("Are you sure you wish to delete your account? (y/n)")
+        really = input("Are you sure you wish to delete your account? (y/n) ")
         if (really == "y"):
             verifyUser = input("Enter your username ")
             verifyPassword = input("Enter your password ")
@@ -247,10 +247,10 @@ def userMenu():
             print("Thank you for shopping at Kastle Krashers!")
             break
 
-        elif (menuOptionCartMenu == "1"):
+        elif (menuOptionUserMenu == "1"):
             viewPurchaseHistory()
 
-        elif (menuOptionCartMenu == "2"):
+        elif (menuOptionUserMenu == "2"):
             accountInfoMenu()
 
         else:
@@ -271,7 +271,7 @@ def loggedInSession():
 
         if (menuOptionLoggedIn == "0"):
             print("Thank you for shopping at Kastle Krashers!")
-            break
+            quit()
 
         elif (menuOptionLoggedIn == "1"):
             inventoryMenu()
@@ -303,7 +303,7 @@ def main():
 
         if (menuOptionMain == "0"):
             print("Thank you for shopping at Kastle Krashers!")
-            break
+            quit()
         
         elif (menuOptionMain == "1"):
             createAccount()
