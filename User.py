@@ -13,12 +13,15 @@ class User:
         #need to make someway to generate new ids
         self.cart = ShoppingCart.ShoppingCart(0)
 
-    # need to add functionality
-    # how do we want to access the global inventory?
-    def checkout(self, cardNumber):
+
+    def checkout(self):
         self.db.emptyCart(self.username)
+        for item in self.cart.items:
+            actualItem = self.db.getItemBySku(item[0])
+            actualItem.changeQuantity(actualItem.quantity - item[1])
         self.purchaseHistory.append(PurchaseHistory(self.username, 0, self.db, self.cart))
         self.cart = ShoppingCart.ShoppingCart(00)
+        
 
     def getHistory(self):
         return self.purchaseHistory

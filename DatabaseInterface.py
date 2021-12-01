@@ -25,7 +25,11 @@ class DatabaseInterface():
         if self.conn:
             self.conn.close()
     
-
+    def getItemBySku(self, sku):
+        for item in self.items:
+            if (item.sku == sku):
+                return item
+        
     def loadItems(self):
         try:
             
