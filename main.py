@@ -71,15 +71,18 @@ def createAccount():
 
 def loginAccount():
     # login stuff here
+    print("login stuff here")
 
 
 def logoutAccount():
     # logout stuff here
+    print("logout stuff here")
     main()
 
 
 def viewInventory():
     # select * from inventory and print it out
+    print("view inventory")
 
 
 def addItemMenu():
@@ -90,6 +93,7 @@ def addItemMenu():
     #     print("Item successfully added to cart")
     # else:
     #     print("Item was not added to cart")
+    print("it has been added")
 
 
 def inventoryMenu():
@@ -119,6 +123,7 @@ def removeItemMenu():
     #     print("Item successfully removed from cart")
     # else:
     #     print("Item was not removed from cart")
+    print("it has been removed")
 
 
 
@@ -151,6 +156,7 @@ def cartMenu():
 
 def viewPurchaseHistory():
     # select * from purchasehistory where userid == (current userID)
+    print("view purchase history")
 
 
 def editShippingMenu():
