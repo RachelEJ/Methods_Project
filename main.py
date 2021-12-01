@@ -149,6 +149,7 @@ def cartMenu():
 
         elif (menuOptionCartMenu == "3"):
             # call cart checkout method
+            print("call cart checkout method")
 
         else:
             print("That is not a valid response. Please try again")
@@ -304,3 +305,5 @@ def main():
 
         else:
             print("That is not a valid response. Please try again")
+
+main()
