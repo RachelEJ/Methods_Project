@@ -5,6 +5,7 @@ CREATE TABLE users (
 	password	varchar(15)		NOT NULL,
 	email		varchar(20)		NOT NULL,
 	address		varchar(30)		NOT NULL,
+	cardInfo	varchar(12)		NOT NULL,
 	PRIMARY KEY (userID)
 );
 
