@@ -1,3 +1,5 @@
+# Bare bones menu system that only allows user to visit each option. No real functionality, just provides a skeleton to add in stuff to later.
+
 def createAccount():
     inputUsername = ""
     inputPassword = ""
