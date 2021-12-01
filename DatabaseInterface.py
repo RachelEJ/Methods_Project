@@ -39,11 +39,12 @@ class DatabaseInterface():
         
     def getUser(self, userid, password):
         for user in self.users:
-            print(user.username)
-            print(user.password)
+            print(user.username) # debug print statements?
+            print(user.password) # debug print statements?
             if (user.username == userid and user.password == password):
                 return user
         return False
+
     def userExists(self, userid):
         for user in self.users:
             if (user.username ==userid):
@@ -58,7 +59,7 @@ class DatabaseInterface():
             while row:
                 self.items.append(Item.Item(row['itemname'], row['sku'], row['price'], row['quantity'], self))
                 row = self.cursor.fetchone()
-            
+            print()
             
         except psycopg2.Error as err:
             if self.conn:
