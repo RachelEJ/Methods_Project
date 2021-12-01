@@ -41,7 +41,7 @@ def createAccount():
     
     addrLenCheck = 0
     while (addrLenCheck == 0):
-        inputAddress = input("Enter your address")
+        inputAddress = input("Enter your address: ")
         if len(inputAddress) > 30:
             print("Please limit address to 30 characters max")
         else:
@@ -117,6 +117,9 @@ def inventoryMenu():
         elif (menuOptionInvMenu == "2"):
             addItemMenu()
 
+def viewCart():
+    # select * from cart WHERE userID = (current user)
+    print("view cart")
 
 def removeItemMenu():
     removeItem = input("Enter the SKU of the item you wish to remove ")
@@ -126,8 +129,6 @@ def removeItemMenu():
     # else:
     #     print("Item was not removed from cart")
     print("it has been removed")
-
-
 
 def cartMenu():
     menuOptionCartMenu = 9
