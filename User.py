@@ -1,11 +1,12 @@
 import ShoppingCart, PurchaseHistory
 
 class User:
-    def __init__(self, username, password, firstName, lastName, address, cardNumber, db):
+    def __init__(self, username, password, firstName, lastName, email, address, cardNumber, db):
         self.username = username
         self.password = password
         self.firstName = firstName
         self.lastName = lastName
+        self.email = email
         self.address = address
         self.cardNumber = cardNumber
         self.purchaseHistory = {}

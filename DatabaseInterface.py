@@ -29,11 +29,13 @@ class DatabaseInterface():
         if self.conn:
             self.conn.close()
     
+    
     def getItemBySku(self, sku):
         for item in self.items:
             
             if (item.sku == sku):
                 return item
+        return False
         
     def getUser(self, userid, password):
         for user in self.users:
@@ -41,6 +43,11 @@ class DatabaseInterface():
             print(user.password)
             if (user.username == userid and user.password == password):
                 return user
+        return False
+    def userExists(self, userid):
+        for user in self.users:
+            if (user.username ==userid):
+                return True
         return False
                 
     def loadItems(self):
@@ -66,7 +73,7 @@ class DatabaseInterface():
             self.cursor.execute("SELECT * FROM users")
             row = self.cursor.fetchone()
             while row:
-                self.users.append(User.User(row['userid'], row['password'], row['fname'], row['lname'], row['address'], row['cardinfo'], self))
+                self.users.append(User.User(row['userid'], row['password'], row['fname'], row['lname'], row['email'], row['address'], row['cardinfo'], self))
                 row = self.cursor.fetchone()
             
             
@@ -155,6 +162,8 @@ class DatabaseInterface():
             sys.exit(-1)
 
     def addUser(self, userid, fname, lname, password, email, address, cardinfo):
+        if(self.userExists(userid)):
+            return False
         try:
             insertString = "INSERT INTO users(userid, fname, lname, password, email, address, cardinfo) VALUES (%s, %s, %s, %s, %s, %s, %s)"
             self.cursor.execute(insertString, (userid, fname, lname, password, email, address, cardinfo))
@@ -166,6 +175,8 @@ class DatabaseInterface():
             print("Could not add user")
             print("PostgreSQL Error: %s" % err.args[0])
             sys.exit(-1)
+        self.users.append(User.User(userid, password, fname, lname, email, address, cardinfo, self))
+        return True
 
     def addCartItem(self, userid, sku, quantity):
         try:

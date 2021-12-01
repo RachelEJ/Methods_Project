@@ -64,7 +64,10 @@ def createAccount(database):
             print("Please limit credit card number to 12 characters max")
         else:
             cardNumLenCheck = 1
-    database.addUser(inputUsername, inputFName, inputLName, inputPassword, inputEmail, inputAddress, inputCreditCard)
+    if (database.addUser(inputUsername, inputFName, inputLName, inputPassword, inputEmail, inputAddress, inputCreditCard)):
+        print("Successfully created user.")
+    else:
+        print("Could not add user - username already taken.")
     # INSERT INTO users VALUES (inputUsername, inputfname, inputlname, inputpassword, inputemail, inputaddress, inputcreditcard)
 # NOTE: database tuple has column names in this order:
 # userid, fname, lname, password, email, address, cardinfo
@@ -85,35 +88,40 @@ def loginAccount(database):
     user = database.getUser(username, password)
     if (user == False):
         print("Did not find a match.")
-        main()
+        main(database)
     else:
         print("Logged In Successfully")
-        loggedInSession(user)
+        loggedInSession(user, database)
 
 
-def logoutAccount(user):
+def logoutAccount(user, database):
     # logout stuff here
     print("logout stuff here")
-    main()
+    main(database)
 
 
-def viewInventory(user):
+def viewInventory(user, database):
     # select * from inventory and print it out
-    print("view inventory")
+    for item in database.items:
+        inStockText = 'In Stock: ' + str(item.quantity)
+        if (item.quantity < 0):
+            inStockText = "Out of Stock"
+        print( item.name, 'SKU:', item.sku, 'Price:', "€"+item.price, inStockText)
 
 
-def addItemMenu(user):
-    addItem = input("Enter the SKU of the item you wish to add ")
-    quantityItem = input("Enter the quantity of that item ")
-    # call the ShoppingCart method for addItem
-    # if (methodCall() == 1):
-    #     print("Item successfully added to cart")
-    # else:
-    #     print("Item was not added to cart")
+def addItemMenu(user, database):
+    addItem = input("Enter the SKU of the item you wish to add: ")
+    quantityItem = int(input("Enter the quantity of that item: "))
+
+    if(user.cart.addItem(addItem, quantityItem)):
+        print ("Successfully added item.")
+    
+    else:
+        print("Could not add item.")
     print("it has been added")
 
 
-def inventoryMenu(user):
+def inventoryMenu(user, database):
     menuOptionInvMenu = 9
     while (menuOptionInvMenu != 0):
         print("===========================")
@@ -128,16 +136,20 @@ def inventoryMenu(user):
             break
 
         elif (menuOptionInvMenu == "1"):
-            viewInventory(user)
+            viewInventory(user, database)
 
         elif (menuOptionInvMenu == "2"):
-            addItemMenu(user)
+            addItemMenu(user, database)
 
-def viewCart(user):
+def viewCart(user, database):
     # select * from cart WHERE userID = (current user)
-    print("view cart")
+    if (len(user.cart.items) == 0):
+        print("Cart is empty.")
+    for item in user.cart.items:
+        actualItem = database.getItemBySku(item[0])
+        print(actualItem.name, "SKU:" , item[0], "Quantity:", item[1], "Cost:", actualItem.price * actualItem.quantity)
 
-def removeItemMenu(user):
+def removeItemMenu(user, database):
     removeItem = input("Enter the SKU of the item you wish to remove ")
     # call the ShoppingCart method for removeItem
     # if (methodCall() == 1):
@@ -146,7 +158,7 @@ def removeItemMenu(user):
     #     print("Item was not removed from cart")
     print("it has been removed")
 
-def cartMenu(user):
+def cartMenu(user, database):
     menuOptionCartMenu = 9
     while (menuOptionCartMenu != 0):
         print("===========================")
@@ -162,10 +174,10 @@ def cartMenu(user):
             break
 
         elif (menuOptionCartMenu == "1"):
-            viewCart(user)
+            viewCart(user, database)
 
         elif (menuOptionCartMenu == "2"):
-            removeItemMenu(user)
+            removeItemMenu(user, database)
 
         elif (menuOptionCartMenu == "3"):
             # call cart checkout method
@@ -175,12 +187,12 @@ def cartMenu(user):
             print("That is not a valid response. Please try again")
 
 
-def viewPurchaseHistory(user):
+def viewPurchaseHistory(user, database):
     # select * from purchasehistory where userid == (current userID)
     print("view purchase history")
 
 
-def editShippingMenu(user):
+def editShippingMenu(user, database):
     newAddrLenCheck = 0
     while (newAddrLenCheck == 0):
         newAddress = input("Enter your new address ")
@@ -192,7 +204,7 @@ def editShippingMenu(user):
 
 
 
-def editPaymentMenu(user):
+def editPaymentMenu(user, database):
     newCardNumLenCheck = 0
     while (newCardNumLenCheck == 0):
         newCardNum = input("Enter your new credit card number ")
@@ -203,7 +215,7 @@ def editPaymentMenu(user):
     # UPDATE users SET cardinfo = (newCardNum) WHERE userid = (current userID)
 
 
-def deleteAccountMenu(user):
+def deleteAccountMenu(user, database):
     really = "x"
     while ((really != "y") and (really != "n")):
         really = input("Are you sure you wish to delete your account? (y/n) ")
@@ -221,7 +233,7 @@ def deleteAccountMenu(user):
             print("That is not a valid response. Please try again")
 
 
-def accountInfoMenu(user):
+def accountInfoMenu(user, database):
     menuOptionAccInfo = 9
     while (menuOptionAccInfo != 0):
         print("===========================")
@@ -237,19 +249,19 @@ def accountInfoMenu(user):
             break
 
         elif (menuOptionAccInfo == "1"):
-            editShippingMenu()
+            editShippingMenu(user, database)
 
         elif (menuOptionAccInfo == "2"):
-            editPaymentMenu()
+            editPaymentMenu(user, database)
         
         elif (menuOptionAccInfo == "3"):
-            deleteAccountMenu()
+            deleteAccountMenu(user, database)
 
         else:
             print("That is not a valid response. Please try again")
 
 
-def userMenu(user):
+def userMenu(user, database):
     menuOptionUserMenu = 9
     while (menuOptionUserMenu != 0):
         print("===========================")
@@ -264,16 +276,16 @@ def userMenu(user):
             break
 
         elif (menuOptionUserMenu == "1"):
-            viewPurchaseHistory(user)
+            viewPurchaseHistory(user, database)
 
         elif (menuOptionUserMenu == "2"):
-            accountInfoMenu(user)
+            accountInfoMenu(user, database)
 
         else:
             print("That is not a valid response. Please try again")
 
 
-def loggedInSession(user):
+def loggedInSession(user, database):
     menuOptionLoggedIn = 9
     while (menuOptionLoggedIn != 0):
         print("===========================")
@@ -290,26 +302,27 @@ def loggedInSession(user):
             quit()
 
         elif (menuOptionLoggedIn == "1"):
-            inventoryMenu(user)
+            inventoryMenu(user, database)
 
         elif (menuOptionLoggedIn == "2"):
-            cartMenu(user)
+            cartMenu(user, database)
 
         elif (menuOptionLoggedIn == "3"):
-            userMenu(user)
+            userMenu(user, database)
 
         elif (menuOptionLoggedIn == "4"):
-            logoutAccount(user)
+            logoutAccount(user, database)
 
         else:
             print("That is not a valid response. Please try again")
 
 
-def main():
+def main(database = None):
     print("Welcome to Kastle Krashers!")
     print()
     menuOptionMain = 911
-    database = DatabaseInterface.DatabaseInterface("postgres", "flameMonkey", "127.0.0.1", "5432", "methods_store")
+    if (database == None):
+        database = DatabaseInterface.DatabaseInterface("postgres", "flameMonkey", "127.0.0.1", "5432", "methods_store")
     while (menuOptionMain != 0):
         print("===========================")
         print("0. Exit Program")

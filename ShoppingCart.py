@@ -4,8 +4,13 @@ class ShoppingCart:
         self.items = []
         self.db = db
     def addItem(self, sku, quantity):
+        #checks if item actually exists
+        actualItem = self.db.getItemBySku(sku)
+        if (actualItem == False or actualItem.quantity < quantity):
+            return False
         self.items.append((sku, quantity))
         self.db.addCartItem(self.userId, sku, quantity)
+        return True
 
     def removeItem(self, sku):
         i = 0
