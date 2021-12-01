@@ -72,6 +72,7 @@ def createAccount():
 def loginAccount():
     # login stuff here
     print("login stuff here")
+    loggedInSession()
 
 
 def logoutAccount():
@@ -99,6 +100,7 @@ def addItemMenu():
 def inventoryMenu():
     menuOptionInvMenu = 9
     while (menuOptionInvMenu != 0):
+        print("===========================")
         print("0. Go back")
         print("1. View Inventory")
         print("2. Add Item to Cart")
@@ -130,6 +132,7 @@ def removeItemMenu():
 def cartMenu():
     menuOptionCartMenu = 9
     while (menuOptionCartMenu != 0):
+        print("===========================")
         print("0. Go back")
         print("1. View Cart")
         print("2. Remove Item from Cart")
@@ -204,6 +207,7 @@ def deleteAccountMenu():
 def accountInfoMenu():
     menuOptionAccInfo = 9
     while (menuOptionAccInfo != 0):
+        print("===========================")
         print("0. Go back")
         print("1. Edit Shipping Address")
         print("2. Edit Payment Information")
@@ -231,6 +235,7 @@ def accountInfoMenu():
 def userMenu():
     menuOptionUserMenu = 9
     while (menuOptionUserMenu != 0):
+        print("===========================")
         print("0. Go back")
         print("1. View Purchase History")
         print("2. View Account Information")
@@ -254,6 +259,7 @@ def userMenu():
 def loggedInSession():
     menuOptionLoggedIn = 9
     while (menuOptionLoggedIn != 0):
+        print("===========================")
         print("0. Exit Program")
         print("1. Inventory Information")
         print("2. Cart Information")
@@ -287,6 +293,7 @@ def main():
     print()
     menuOptionMain = 9
     while (menuOptionMain != 0):
+        print("===========================")
         print("0. Exit Program")
         print("1. Create Account")
         print("2. Login")
