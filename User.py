@@ -11,6 +11,8 @@ class User:
         self.cardNumber = cardNumber
         self.purchaseHistory = {}
         self.db = db
+        self.currPurchaseNum = 0
+
         #need to make someway to generate new ids
         self.cart = ShoppingCart.ShoppingCart(username, db)
 
@@ -19,8 +21,9 @@ class User:
         for item in self.cart.items:
             actualItem = self.db.getItemBySku(item[0])
             actualItem.changeQuantity(actualItem.quantity - item[1])
-        self.purchaseHistory.append(PurchaseHistory(self.username, 0, self.db, self.cart))
+        self.purchaseHistory[self.currPurchaseNum] = (PurchaseHistory.PurchaseHistory(self.username, self.currPurchaseNum, self.db, self.cart))
         self.cart = ShoppingCart.ShoppingCart(self.username, self.db)
+        self.currPurchaseNum += 1
         
     def getUsername(self):
         return self.username
