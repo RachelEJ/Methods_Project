@@ -36,6 +36,7 @@ https://www.makeuseof.com/tag/install-pip-for-python/
 `pip install psycopg2-binary`
 7. Verify that you have psycopg2 installed
 `pip list`
+8. Before using the program, you must change the password for the database located near the bottom of main.py
 
 ## Accessing and altering the database using Python
 ### Add SQL commands into Python file
