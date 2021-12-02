@@ -6,6 +6,7 @@ CREATE TABLE users (
 	email		varchar(20)		NOT NULL,
 	address		varchar(30)		NOT NULL,
 	cardInfo	varchar(12)		NOT NULL,
+	purchasenum	int			NOT NULL,
 	PRIMARY KEY (userID)
 );
 
@@ -32,7 +33,6 @@ CREATE TABLE purchaseHistory (
 	itemSKU		varchar(4)		NOT NULL,
 	quantity	int			NOT NULL,
 	PRIMARY KEY (purchaseID, userID, itemSKU),
-	UNIQUE (purchaseID),
 	FOREIGN KEY (userID) REFERENCES users(userID),
 	FOREIGN KEY (itemSKU) REFERENCES inventory(SKU)
 );
