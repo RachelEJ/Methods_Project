@@ -353,7 +353,8 @@ def main(database = None):
     print("Welcome to Kastle Krashers!")
     menuOptionMain = 911
     if (database == None):
-        database = DatabaseInterface.DatabaseInterface("postgres", "flameMonkey", "127.0.0.1", "5432", "methods_store")
+        #Make sure to change the password to your database password for main to work.
+        database = DatabaseInterface.DatabaseInterface("postgres", "password", "127.0.0.1", "5432", "methods_store")
     while (menuOptionMain != 0):
         print("===========================")
         print("0. Exit Program")
