@@ -20,7 +20,7 @@ class User:
             actualItem = self.db.getItemBySku(item[0])
             actualItem.changeQuantity(actualItem.quantity - item[1])
         self.purchaseHistory.append(PurchaseHistory(self.username, 0, self.db, self.cart))
-        self.cart = ShoppingCart.ShoppingCart(00)
+        self.cart = ShoppingCart.ShoppingCart(self.username, self.db)
         
     def getUsername(self):
         return self.username

@@ -39,8 +39,7 @@ class DatabaseInterface():
         
     def getUser(self, userid, password):
         for user in self.users:
-            print(user.username) # debug print statements?
-            print(user.password) # debug print statements?
+            
             if (user.username == userid and user.password == password):
                 return user
         return False
