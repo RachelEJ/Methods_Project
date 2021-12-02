@@ -200,7 +200,12 @@ def cartMenu(user, database):
 
 def viewPurchaseHistory(user, database):
     # select * from purchasehistory where userid == (current userID)
-    print("view purchase history")
+    
+    for historyItem in user.purchaseHistory:
+        print("Purchase:", user.purchaseHistory[historyItem].historyID)
+        for item in user.purchaseHistory[historyItem].items:
+            actualItem = database.getItemBySku(item[0])
+            print(actualItem.name, "SKU:" , item[0], "Quantity:", item[1], "Cost:", actualItem.price * int(item[1]))
 
 
 def deleteAccount(user, database):
@@ -252,6 +257,10 @@ def deleteAccountMenu(user, database):
 def accountInfoMenu(user, database):
     print("===========================")
     print("Account Information")
+    print("Address: ", user.address)
+    print("Email: ", user.email)
+    print("Credit Card Number: ", user.cardNumber)
+
     menuOptionAccInfo = 9
     while (menuOptionAccInfo != 0):
         print("===========================")
@@ -344,7 +353,7 @@ def main(database = None):
     print("Welcome to Kastle Krashers!")
     menuOptionMain = 911
     if (database == None):
-        database = DatabaseInterface.DatabaseInterface("bob", "admin", "127.0.0.1", "5432", "kastlekrashers")
+        database = DatabaseInterface.DatabaseInterface("postgres", "flameMonkey", "127.0.0.1", "5432", "methods_store")
     while (menuOptionMain != 0):
         print("===========================")
         print("0. Exit Program")
