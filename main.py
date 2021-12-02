@@ -1,4 +1,5 @@
 import DatabaseInterface
+from ShoppingCart import ShoppingCart
 
 def createAccount(database):
     inputUsername = ""
@@ -161,6 +162,7 @@ def checkoutCart(user, database):
         print("Cart is empty.")
     else:
         if(True): # call the checkout stuff here somehow
+            user.checkout()
             print ("Successfully checked out items.\n")
         else:
             print("Could not check out items.\n")
@@ -342,7 +344,7 @@ def main(database = None):
     print("Welcome to Kastle Krashers!")
     menuOptionMain = 911
     if (database == None):
-        database = DatabaseInterface.DatabaseInterface("postgres", "password", "127.0.0.1", "5432", "methods_store")
+        database = DatabaseInterface.DatabaseInterface("bob", "admin", "127.0.0.1", "5432", "kastlekrashers")
     while (menuOptionMain != 0):
         print("===========================")
         print("0. Exit Program")

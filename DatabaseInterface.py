@@ -39,7 +39,6 @@ class DatabaseInterface():
         
     def getUser(self, userid, password):
         for user in self.users:
-            
             if (user.username == userid and user.password == password):
                 return user
         return False
@@ -226,8 +225,6 @@ class DatabaseInterface():
                 self.conn.rollback()
             print("PostgreSQL Error: %s" % err.args[0])
             sys.exit(-1)
-
-        
 
     def addCartItem(self, userid, sku, quantity):
         try:
