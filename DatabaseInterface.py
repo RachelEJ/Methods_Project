@@ -227,6 +227,8 @@ class DatabaseInterface():
             print("PostgreSQL Error: %s" % err.args[0])
             sys.exit(-1)
 
+        
+
     def addCartItem(self, userid, sku, quantity):
         try:
             insertString = "INSERT INTO cart(userid, itemsku, quantity) VALUES (%s, %s, %s)"
@@ -255,7 +257,7 @@ class DatabaseInterface():
 
     def emptyCart(self, userid):
         try:
-            insertString = "DELETE FROM cart WHERE userid = %s"
+            insertString = "DELETE FROM cart WHERE userid = '{0}'".format(userid)
             self.cursor.execute(insertString, (userid))
             self.conn.commit()
             
