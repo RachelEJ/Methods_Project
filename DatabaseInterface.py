@@ -107,9 +107,9 @@ class DatabaseInterface():
                 self.cursor.execute(grabString)
                 row = self.cursor.fetchone()
                 while row:
-                    if (row['purchaseid'] in user.purchaseHistory):
-                        user.purchaseHistory['purchaseid'] = PurchaseHistory.PurchaseHistory(user.username, row['purchaseid'], self)
-                    user.purchaseHistory['purchaseid'].items.append((row['itemsku'], row['quantity']))
+                    if (row['purchaseid'] not in user.purchaseHistory):
+                        user.purchaseHistory[row['purchaseid']] = PurchaseHistory.PurchaseHistory(user.username, row['purchaseid'], self)
+                    user.purchaseHistory[row['purchaseid']].items.append((row['itemsku'], row['quantity']))
                     row = self.cursor.fetchone()
                 
                 
@@ -174,7 +174,7 @@ class DatabaseInterface():
             print("Could not add user\n")
             print("PostgreSQL Error: %s" % err.args[0])
             sys.exit(-1)
-        self.users.append(User.User(userid, password, fname, lname, email, address, cardinfo, self))
+        self.users.append(User.User(userid, password, fname, lname, email, address, cardinfo, 1, self))
         return True
 
     def removeUser(self, userid):

@@ -24,7 +24,7 @@ class User:
         self.purchaseHistory[self.currPurchaseNum] = (PurchaseHistory.PurchaseHistory(self.username, self.currPurchaseNum, self.db, self.cart))
         self.cart = ShoppingCart.ShoppingCart(self.username, self.db)
         self.currPurchaseNum += 1
-        self.db.savePurchaseNumIncrease(self, self.username, self.currPurchaseNum)
+        self.db.savePurchaseNumIncrease(self.username, self.currPurchaseNum)
         
     def getUsername(self):
         return self.username

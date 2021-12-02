@@ -344,7 +344,7 @@ def main(database = None):
     print("Welcome to Kastle Krashers!")
     menuOptionMain = 911
     if (database == None):
-        database = DatabaseInterface.DatabaseInterface("postgres", "flameMonkey", "127.0.0.1", "5432", "methods_store")
+        database = DatabaseInterface.DatabaseInterface("bob", "admin", "127.0.0.1", "5432", "kastlekrashers")
     while (menuOptionMain != 0):
         print("===========================")
         print("0. Exit Program")
