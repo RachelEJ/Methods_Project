@@ -342,7 +342,7 @@ def main(database = None):
     print("Welcome to Kastle Krashers!")
     menuOptionMain = 911
     if (database == None):
-        database = DatabaseInterface.DatabaseInterface("postgres", "MSUrej3713", "127.0.0.1", "5432", "methods_store")
+        database = DatabaseInterface.DatabaseInterface("postgres", "password", "127.0.0.1", "5432", "methods_store")
     while (menuOptionMain != 0):
         print("===========================")
         print("0. Exit Program")
