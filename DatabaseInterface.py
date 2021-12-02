@@ -73,7 +73,7 @@ class DatabaseInterface():
             self.cursor.execute("SELECT * FROM users")
             row = self.cursor.fetchone()
             while row:
-                self.users.append(User.User(row['userid'], row['password'], row['fname'], row['lname'], row['email'], row['address'], row['cardinfo'], self))
+                self.users.append(User.User(row['userid'], row['password'], row['fname'], row['lname'], row['email'], row['address'], row['cardinfo'], row['purchasenum'], self))
                 row = self.cursor.fetchone()
             
             
@@ -165,7 +165,7 @@ class DatabaseInterface():
         if(self.userExists(userid)):
             return False
         try:
-            insertString = "INSERT INTO users(userid, fname, lname, password, email, address, cardinfo) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+            insertString = "INSERT INTO users(userid, fname, lname, password, email, address, cardinfo, purchasenum) VALUES (%s, %s, %s, %s, %s, %s, %s, 1)"
             self.cursor.execute(insertString, (userid, fname, lname, password, email, address, cardinfo))
             self.conn.commit()
             
