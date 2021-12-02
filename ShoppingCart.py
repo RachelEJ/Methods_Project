@@ -9,7 +9,7 @@ class ShoppingCart:
         actualItem = self.db.getItemBySku(sku)
         if (actualItem == False or actualItem.quantity < quantity):
             return False
-        
+        i = 0
         while (i < len(self.items)):
             if (self.items[i][0] == sku):
                 return False
