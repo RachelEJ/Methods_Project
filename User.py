@@ -14,7 +14,6 @@ class User:
         #need to make someway to generate new ids
         self.cart = ShoppingCart.ShoppingCart(username, db)
 
-
     def checkout(self):
         self.db.emptyCart(self.username)
         for item in self.cart.items:
@@ -23,20 +22,16 @@ class User:
         self.purchaseHistory.append(PurchaseHistory(self.username, 0, self.db, self.cart))
         self.cart = ShoppingCart.ShoppingCart(00)
         
+    def getUsername(self):
+        return self.username
 
     def getHistory(self):
         return self.purchaseHistory
     
-    def changeAddresss(self, newAddress):
+    def changeAddress(self, newAddress):
         self.address = newAddress
         self.db.changeUserAddressInfo(self.username, newAddress)
 
     def changePayment(self, cardNumber):
         self.cardNumber = cardNumber
         self.db.changeUserCardInfo(self.username, cardNumber)
-
-    
-
-    
-
-            

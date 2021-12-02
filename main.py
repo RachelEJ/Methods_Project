@@ -73,10 +73,7 @@ def createAccount(database):
 # userid, fname, lname, password, email, address, cardinfo
 
 
-
 def loginAccount(database):
-    # login stuff here
-
     username = ""
     password = ""
     while(len(username) == 0):
@@ -100,7 +97,6 @@ def logoutAccount(user, database):
 
 
 def viewInventory(user, database):
-    # select * from inventory and print it out
     for item in database.items:
         inStockText = 'In Stock: ' + str(item.quantity)
         if (item.quantity < 0):
@@ -141,8 +137,8 @@ def inventoryMenu(user, database):
         elif (menuOptionInvMenu == "2"):
             addItemMenu(user, database)
 
+
 def viewCart(user, database):
-    # select * from cart WHERE userID = (current user)
     if (len(user.cart.items) == 0):
         print("Cart is empty.")
     for item in user.cart.items:
@@ -150,14 +146,25 @@ def viewCart(user, database):
         print(actualItem.name, "SKU:" , item[0], "Quantity:", item[1], "Cost:", actualItem.price * int(item[1]))
     print()
 
+
 def removeItemMenu(user, database):
-    removeItem = input("Enter the SKU of the item you wish to remove ")
-    # call the ShoppingCart method for removeItem
-    # if (methodCall() == 1):
-    #     print("Item successfully removed from cart")
-    # else:
-    #     print("Item was not removed from cart")
-    print("it has been removed")
+    removeItem = input("Enter the SKU of the item you wish to remove: ")
+    if(user.cart.removeItem(removeItem)):
+        print ("Successfully removed item.\n")
+    
+    else:
+        print("Could not remove item.\n")
+
+
+def checkoutCart(user, database):
+    if (len(user.cart.items) == 0):
+        print("Cart is empty.")
+    else:
+        if(True): # call the checkout stuff here somehow
+            print ("Successfully checked out items.\n")
+        else:
+            print("Could not check out items.\n")
+
 
 def cartMenu(user, database):
     print("===========================")
@@ -183,8 +190,7 @@ def cartMenu(user, database):
             removeItemMenu(user, database)
 
         elif (menuOptionCartMenu == "3"):
-            # call cart checkout method
-            print("call cart checkout method")
+            checkoutCart(user, database)
 
         else:
             print("That is not a valid response. Please try again\n")
@@ -195,16 +201,24 @@ def viewPurchaseHistory(user, database):
     print("view purchase history")
 
 
+def deleteAccount(user, database):
+    removeID = user.getUsername()
+    if (database.removeUser(removeID)):
+        print("Successfully deleted account.\n")
+        main()
+    else:
+        print("Failed to delete account.\n")
+
+
 def editShippingMenu(user, database):
     newAddrLenCheck = 0
     while (newAddrLenCheck == 0):
-        newAddress = input("Enter your : ")
+        newAddress = input("Enter your new address: ")
         if len(newAddress) > 30:
             print("Please limit address to 30 characters max")
         else:
             newAddrLenCheck = 1
-    # UPDATE users SET address = (newAddress) WHERE userid = (current userID)
-
+    user.changeAddress(newAddress)
 
 
 def editPaymentMenu(user, database):
@@ -215,7 +229,7 @@ def editPaymentMenu(user, database):
             print("Please limit credit card number to 12 characters max")
         else:
             newCardNumLenCheck = 1
-    # UPDATE users SET cardinfo = (newCardNum) WHERE userid = (current userID)
+    user.changePayment(newCardNum)
 
 
 def deleteAccountMenu(user, database):
@@ -223,10 +237,7 @@ def deleteAccountMenu(user, database):
     while ((really != "y") and (really != "n")):
         really = input("Are you sure you wish to delete your account? (y/n) ")
         if (really == "y"):
-            verifyUser = input("Enter your username: ")
-            verifyPassword = input("Enter your password: ")
-            # call deleteAccount() class method
-            break
+            deleteAccount(user, database)
 
         elif (really == "n"):
             print("Phew, you had us worried for a second there\n")
@@ -331,7 +342,7 @@ def main(database = None):
     print("Welcome to Kastle Krashers!")
     menuOptionMain = 911
     if (database == None):
-        database = DatabaseInterface.DatabaseInterface("postgres", "flameMonkey", "127.0.0.1", "5432", "methods_store")
+        database = DatabaseInterface.DatabaseInterface("postgres", "password", "127.0.0.1", "5432", "methods_store")
     while (menuOptionMain != 0):
         print("===========================")
         print("0. Exit Program")

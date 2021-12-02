@@ -47,7 +47,7 @@ class DatabaseInterface():
 
     def userExists(self, userid):
         for user in self.users:
-            if (user.username ==userid):
+            if (user.username == userid):
                 return True
         return False
                 
@@ -173,11 +173,60 @@ class DatabaseInterface():
         except psycopg2.Error as err:
             if self.conn:
                 self.conn.rollback()
-            print("Could not add user")
+            print("Could not add user\n")
             print("PostgreSQL Error: %s" % err.args[0])
             sys.exit(-1)
         self.users.append(User.User(userid, password, fname, lname, email, address, cardinfo, self))
         return True
+
+    def removeUser(self, userid):
+        try:
+            # counts number of times userid appears in purchasehistory
+            phString = "SELECT COUNT(*) FROM purchasehistory WHERE userid = '{0}'".format(userid)
+            self.cursor.execute(phString)
+            self.conn.commit()
+            row = self.cursor.fetchone()
+            phCount = row[0]
+
+            # deletes all rows containing userid
+            if (phCount > 0):
+                phString = "DELETE FROM purchasehistory WHERE userid = '{0}'".format(userid)
+                self.cursor.execute(phString)
+                self.conn.commit()
+
+            # counts number of times userid appears in cart
+            cartString = "SELECT COUNT(*) FROM cart WHERE userid = '{0}'".format(userid)
+            self.cursor.execute(cartString)
+            self.conn.commit()
+            row = self.cursor.fetchone()
+            cartCount = row[0]
+
+            # deletes all rows containing userid
+            if (cartCount > 0):
+                cartString = "DELETE FROM cart WHERE userid = '{0}'".format(userid)
+                self.cursor.execute(cartString)
+                self.conn.commit()
+
+            # counts number of times userid appears in users
+            usersString = "SELECT COUNT(*) FROM users WHERE userid = '{0}'".format(userid)
+            self.cursor.execute(usersString)
+            self.conn.commit()
+            row = self.cursor.fetchone()
+            usersCount = row[0]
+
+            # deletes all rows containing userid
+            if (usersCount > 0):
+                usersString = "DELETE FROM users WHERE userid = '{0}'".format(userid)
+                self.cursor.execute(usersString)
+                self.conn.commit()
+
+            return True
+        
+        except psycopg2.Error as err:
+            if self.conn:
+                self.conn.rollback()
+            print("PostgreSQL Error: %s" % err.args[0])
+            sys.exit(-1)
 
     def addCartItem(self, userid, sku, quantity):
         try:
@@ -194,7 +243,7 @@ class DatabaseInterface():
 
     def removeCartItem(self, userid, sku):
         try:
-            insertString = "DELETE FROM cart WHERE userid = %s AND sku = %s"
+            insertString = "DELETE FROM cart WHERE userid = %s AND itemsku = %s"
             self.cursor.execute(insertString, (userid, sku))
             self.conn.commit()
             
@@ -231,8 +280,3 @@ class DatabaseInterface():
             print("PostgreSQL Error: %s" % err.args[0])
             sys.exit(-1)
     
-
-    
-
-
-
