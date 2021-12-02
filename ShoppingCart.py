@@ -10,6 +10,11 @@ class ShoppingCart:
         if (actualItem == False or actualItem.quantity < quantity):
             return False
         
+        while (i < len(self.items)):
+            if (self.items[i][0] == sku):
+                return False
+            i += 1
+
         self.items.append((sku, quantity))
         self.db.addCartItem(self.userId, sku, quantity)
         return True
