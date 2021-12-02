@@ -278,3 +278,15 @@ class DatabaseInterface():
             print("PostgreSQL Error: %s" % err.args[0])
             sys.exit(-1)
     
+    def savePurchaseNumIncrease(self, userid, newPurchaseNum):
+        try:
+            insertString = "UPDATE users SET purchasenum = %s WHERE userid = %s"
+            self.cursor.execute(insertString, (newPurchaseNum, userid))
+            self.conn.commit()
+            
+        except psycopg2.Error as err:
+            if self.conn:
+                self.conn.rollback()
+            print("Could not change user purchasenum")
+            print("PostgreSQL Error: %s" % err.args[0])
+            sys.exit(-1)

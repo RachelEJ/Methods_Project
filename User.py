@@ -1,7 +1,7 @@
 import ShoppingCart, PurchaseHistory
 
 class User:
-    def __init__(self, username, password, firstName, lastName, email, address, cardNumber, db):
+    def __init__(self, username, password, firstName, lastName, email, address, cardNumber, currPurchaseNum, db):
         self.username = username
         self.password = password
         self.firstName = firstName
@@ -11,7 +11,7 @@ class User:
         self.cardNumber = cardNumber
         self.purchaseHistory = {}
         self.db = db
-        self.currPurchaseNum = 0
+        self.currPurchaseNum = currPurchaseNum
 
         #need to make someway to generate new ids
         self.cart = ShoppingCart.ShoppingCart(username, db)
@@ -24,6 +24,7 @@ class User:
         self.purchaseHistory[self.currPurchaseNum] = (PurchaseHistory.PurchaseHistory(self.username, self.currPurchaseNum, self.db, self.cart))
         self.cart = ShoppingCart.ShoppingCart(self.username, self.db)
         self.currPurchaseNum += 1
+        self.db.savePurchaseNumIncrease(self, self.username, self.currPurchaseNum)
         
     def getUsername(self):
         return self.username
